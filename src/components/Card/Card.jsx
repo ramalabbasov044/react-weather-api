@@ -6,7 +6,6 @@ const Card = ({ cityData }) => {
   for(let i = 0 ; i < 4 ; i++){
     lastHourData.push(cityData?.forecast?.forecastday[0]?.hour[i])
   }
-  console.log(lastHourData);
   return (
     <>
         {

@@ -4,9 +4,9 @@ import SearchInput from '../../components/Input/Input'
 import WeatherCard from '../../components/Card/Card'
 
 const Home = () => {
-    const [cityData,setCityData] = useState()
+    const [cityData, setCityData] = useState(null);
     
-    let searchCity = (city) => {
+    const searchCity = async (city) => {
         const url = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=' + `${city}`;
         const options = {
             method: 'GET',
@@ -15,19 +15,22 @@ const Home = () => {
                 'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
             }
         };
-        
-        fetch(url,options)
-        .then((res) => res.json())
-        .then((data) => setCityData(data))
+
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            setCityData(data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
         <div className={styles.wrapper}>
             <SearchInput searchCity={searchCity} />
-
             <WeatherCard cityData={cityData} />
         </div>
     )
 }
 
-export default Home
+export default Home;
